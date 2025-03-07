@@ -43,19 +43,24 @@
             </div>
         </div>
     </form>
-
-    <script>
-        function validateForm() {
-            const idCategory = document.getElementById('id_category').value;
-            const date = document.getElementById('date').value;
-            const title = document.getElementById('title').value;
-            const value = document.getElementById('value').value;
-            const status = document.getElementById('status').value;
-            if (!idCategory || !date || !title || !value || !status) {
-                alert('Data harus diisi semuanya');
-                return false;
+    @push('js')
+        <script>
+            function validateForm() {
+                const idCategory = document.getElementById('id_category').value;
+                const date = document.getElementById('date').value;
+                const title = document.getElementById('title').value;
+                const value = document.getElementById('value').value;
+                const status = document.getElementById('status').value;
+                if (!idCategory || !date || !title || !value || !status) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Semua field harus diisi!'
+                    });
+                    return false;
+                }
+                return true;
             }
-            return true;
-        }
-    </script>
+        </script>
+    @endpush
 @endsection

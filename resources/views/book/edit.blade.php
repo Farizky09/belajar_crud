@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('main')
-    <form action="{{ route('book.update', $data->id) }}" method="POST">
+    <form action="{{ route('book.update', $data->id) }}" method="POST" onsubmit="return validateForm()">
         @csrf
         @method('PUT')
         <div class="container mt-5">
@@ -15,22 +15,22 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="id_category" class="form-label">id Kategori</label>
-                                <input type="text" class="form-control" id="id_category" name="id_category"
-                                    value="{{ $data->id_category }}" required>
+                                <input type="number" class="form-control" id="id_category" name="id_category"
+                                    value="{{ $data->id_category }}">
                             </div>
                             <div class="mb-3">
                                 <label for="date" class="form-label">Tanggal</label>
                                 <input type="date" class="form-control" id="date" name="date"
-                                    value="{{ $data->date }}" required>
+                                    value="{{ $data->date }}">
                             </div>
                             <div class="mb-3">
                                 <label for="title" class="form-label">Judul</label>
                                 <input type="text" class="form-control" id="title" name="title"
-                                    value="{{ $data->title }}" required>
+                                    value="{{ $data->title }}">
                             </div>
                             <div class="mb-3">
                                 <label for="value" class="form-label">Isi</label>
-                                <textarea class="form-control" id="value" name="value" rows="3" required>{{ $data->value }}</textarea>
+                                <textarea class="form-control" id="value" name="value" rows="3">{{ $data->value }}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
@@ -45,4 +45,25 @@
                     </div>
                 </div>
             </div>
+
+            @push('js')
+                <script>
+                    function validateForm() {
+                        const idCategory = document.getElementById('id_category').value;
+                        const date = document.getElementById('date').value;
+                        const title = document.getElementById('title').value;
+                        const value = document.getElementById('value').value;
+                        const status = document.getElementById('status').value;
+                        if (!idCategory || !date || !title || !value || !status) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Semua field harus diisi!'
+                            });
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
+            @endpush
         @endsection
